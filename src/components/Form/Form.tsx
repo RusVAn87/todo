@@ -14,7 +14,9 @@ export const Form = (props: Props) => {
 
 
 
-    const formSubmit = () => {
+    const formSubmit = (event: React.SyntheticEvent) => {
+        event.preventDefault()
+
         if (text) {
             props.createNewToDo(text)
             setText('') // Чтобы почистить поле

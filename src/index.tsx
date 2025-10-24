@@ -1,86 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM, { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
+// Redux
+import { store } from './app/store'
+import { Provider } from 'react-redux'
 
 import './assets/scss/normalize.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/scss/style.scss';
 
-// import './index.scss';
-import { ToDoListPage } from './pages/ToDoListPage';
-import { BrowserRouter, Routes, Route, createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/HomePage';
-import { ToDo } from './models/todo-item';
-import { NotFound } from './pages/404';
-import { ItemDescription } from './pages/ItemDescription';
-import { Layout } from './layout/Layout';
 
+const container = document.getElementById('root')
+if (container) {
+  const root = createRoot(container)
 
-const todos: ToDo[] = [
-  {
-    id: 0,
-    text: 'Первое задание',
-    isDone: false
-  },
-  {
-    id: 1,
-    text: 'Второе задание',
-    isDone: true
-  },
-  {
-    id: 2,
-    text: 'Третье задание',
-    isDone: false
-  },
-  {
-    id: 3,
-    text: 'Четвёртое задание',
-    isDone: true
-  }
-]
+  root.render(
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage todos={todos} />
-      },
-      {
-        path: '/todo',
-        element: <ToDoListPage />
-      },
-      {
-        path: '/list/:id',
-        element: <ItemDescription todos={todos} />
-      }
-    ]
-  },
-  {
-    path: '*',
-    element: <NotFound />
-  }
-], { basename: '/app/' })
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router}>
-
-    </RouterProvider>
-    {/* <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path='/' element={<HomePage todos={todos} />}></Route>
-        <Route path='/list/:id' element={<ItemDescription todos={todos} />}></Route>
-        <Route path='/todo' element={<ToDoListPage />}></Route>
-        <Route path='*' element={<NotFound />}></Route>
-      </Routes>
-    </BrowserRouter> */}
-
-  </React.StrictMode>
-);
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </React.StrictMode>
+  )
+} else {
+  throw new Error(
+    "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
+  )
+}

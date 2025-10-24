@@ -7,6 +7,7 @@ export const ListItem = ({ todo }: { todo: ToDo }) => {
         <NavLink
             className={`${classes.link} ${todo.isDone ? classes.done : classes.notDone}`}
             to={`/list/${todo.id}`}
+            rel="noreferrer"
         >{todo.text}</NavLink>
     )
 }

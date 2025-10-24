@@ -1,53 +1,37 @@
 // import React from "react"
 
-import { useState } from "react"
 import { Form } from "../components/Form/Form"
 import { ToDoList } from "../components/ToDoList/ToDoList"
 import { ToDo } from "../models/todo-item"
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { createAction, deleteAction, updateAction } from "../features/todoList";
 
 export const ToDoListPage = () => {
-    const [todos, setTodos] = useState<ToDo[]>([])
-
-    const notifyAdd = () => toast.success("Задача добавлена");
-    const notifyToggle = () => toast.info("Статус обновлён");
-    const notifyDelete = () => toast.error("Запись удалена");
+    const todoList = useSelector((state: RootState) => state.todoList.todos)
+    const dispatch = useDispatch()
 
     const createNewToDo = (text: string) => {
-        console.log('createNewToDo:' + text)
-        const newToDo: ToDo = {
-            id: todos.length,
-            text: text,
-            isDone: false
-        }
-        setTodos([...todos, newToDo])
-        notifyAdd();
+        dispatch(createAction(text))
+        // notifyAdd()
     }
 
     const updateToDo = (toDoItem: ToDo) => {
-        const newTodos = todos.map((todo) => {
-            if (todo.id === toDoItem.id) {
-                todo.isDone = !todo.isDone
-            }
-            return todo
-        })
-        setTodos(newTodos)
-        notifyToggle();
+        dispatch(updateAction(toDoItem))
+        // notifyToggle();
     }
 
     const deleteToDo = (toDoItem: ToDo) => {
-        const newTodos = todos.filter((todo) => {
-            return todo.id !== toDoItem.id // Вернёт всё, кто отличается по идентификатору
-        })
+        dispatch(deleteAction(toDoItem))
+        // notifyDelete();
 
-        setTodos(newTodos);
-        notifyDelete();
     }
 
     return (
         <>
             <Form createNewToDo={createNewToDo} />
-            <ToDoList todos={todos} updateToDo={updateToDo} deleteToDo={deleteToDo} />
+            <ToDoList todos={todoList} updateToDo={updateToDo} deleteToDo={deleteToDo} />
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}

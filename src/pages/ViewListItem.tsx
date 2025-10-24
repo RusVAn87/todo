@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react"
 import { ToDo } from "../models/todo-item"
 import { useNavigate, useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootState } from "../app/store"
 
-interface ComponentProps {
-    todos: ToDo[]
-}
-
-export const ItemDescription = ({ todos }: ComponentProps) => {
-
+export const ViewListItem = () => {
+    const todoList = useSelector((state: RootState) => state.todoList.todos)
     const { id } = useParams() // достаёт динамические параметры
     const navigate = useNavigate() // создаёт навигацию
     const [todo, setTodo] = useState<ToDo>()
@@ -15,7 +13,7 @@ export const ItemDescription = ({ todos }: ComponentProps) => {
     // Эффект, который будет запущен во время загрузки данного компотента
     // Объединяет все жизненные циклы компотента
     useEffect(() => {
-        const searchToDo = todos.find((todo) => String(todo.id) === id)
+        const searchToDo = todoList.find((todo) => String(todo.id) === id)
         if (searchToDo) {
             setTodo(searchToDo)
         } else {
@@ -23,7 +21,7 @@ export const ItemDescription = ({ todos }: ComponentProps) => {
             navigate('/404')
         }
 
-    }, [todos, id, navigate]);
+    }, [todoList, id, navigate]);
 
     return (
         <div className="container">
