@@ -7,7 +7,6 @@ const notifyAdd = () => toast.success("Задача добавлена");
 const notifyToggle = () => toast.info("Статус обновлён");
 const notifyDelete = () => toast.error("Запись удалена");
 
-
 export interface TodoState {
     todos: ToDo[]
 }

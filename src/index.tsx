@@ -6,9 +6,11 @@ import { router } from './router';
 import { store } from './app/store'
 import { Provider } from 'react-redux'
 
-import './assets/scss/normalize.scss';
+// import './assets/scss/normalize.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import './assets/scss/style.scss';
+// import './assets/scss/style.scss';
+import { GlobalStyle } from './styles/GlobalStyle';
+import { Normalize } from 'styled-normalize';
 
 
 const container = document.getElementById('root')
@@ -19,6 +21,7 @@ if (container) {
 
     <React.StrictMode>
       <Provider store={store}>
+        <GlobalStyle />
         <RouterProvider router={router} />
       </Provider>
     </React.StrictMode>

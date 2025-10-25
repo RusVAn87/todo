@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
-import './Form.scss'
+// import './Form.scss'
+
+import plusIcon from "../../assets/images/plus.png"
+import { FormBlock, FormControl, FormField, FormLabel, FormWrapper } from './Form.styled'
 
 type Props = {
     createNewToDo: (text: string) => void,
@@ -24,17 +27,17 @@ export const Form = (props: Props) => {
     }
 
     return (
-        <div className="form-wrapper">
-            <form action="#" onSubmit={formSubmit}>
-                <label>
-                    <input
+        <FormWrapper>
+            <FormBlock action="#" onSubmit={formSubmit}>
+                <FormLabel>
+                    <FormField
                         value={text}
                         type="text"
                         onChange={(event) => { setText(event.target.value) }}
                     />
-                    <button></button>
-                </label>
-            </form>
-        </div>
+                    <FormControl icon={plusIcon}></FormControl>
+                </FormLabel>
+            </FormBlock>
+        </FormWrapper>
     )
 }
