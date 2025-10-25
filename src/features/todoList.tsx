@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { ToDo } from '../models/todo-item'
 import { toast } from 'react-toastify';
+import { v4 as uuid } from "uuid"
+
 
 const notifyAdd = () => toast.success("Задача добавлена");
 const notifyToggle = () => toast.info("Статус обновлён");
@@ -21,7 +23,7 @@ export const todoSlice = createSlice({
     reducers: {
         createAction: (state, action: PayloadAction<string>) => {
             const newToDo: ToDo = {
-                id: state.todos.length,
+                id: uuid(),
                 text: action.payload,
                 isDone: false
             }
